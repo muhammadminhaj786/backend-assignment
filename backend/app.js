@@ -114,6 +114,12 @@ app.post('/api/login', async (req,res)=>{
     }
 })
 
+
+// <----------------Prducts api------->
+// app.post('/api/createproduct',(req,res)=>{
+
+// })
+
 //check
 app.get('/',(req,res)=>{
     res.json({
