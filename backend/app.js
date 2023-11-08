@@ -116,9 +116,26 @@ app.post('/api/login', async (req,res)=>{
 
 
 // <----------------Prducts api------->
-// app.post('/api/createproduct',(req,res)=>{
+app.post('/api/createproduct',(req,res)=>{
+    try {
+        
+        const body = req.body
+        const proObj = {
+            product_name:body.productName,
+            product_id:body.productId,
+            product_price:body.productPrice,
+            product_description:body.productDesc
+        }
 
-// })
+    } catch (error) {
+        res.json({
+            message:"product is not created",
+            status:false,
+            data:null
+        })
+    }
+
+})
 
 //check
 app.get('/',(req,res)=>{
