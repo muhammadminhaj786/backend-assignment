@@ -7,6 +7,7 @@ const userModel = require('./model/userSchema')
 const bcrypt = require("bcryptjs")
 const jwt = require('jsonwebtoken')
 const cors = require("cors");
+const productModel = require("./model/productSchema");
 
 const PORT = 3001;
 
@@ -116,7 +117,7 @@ app.post('/api/login', async (req,res)=>{
 
 
 // <----------------Prducts api------->
-app.post('/api/createproduct',(req,res)=>{
+app.post('/api/createproduct', async(req,res)=>{
     try {
         
         const body = req.body
@@ -126,6 +127,13 @@ app.post('/api/createproduct',(req,res)=>{
             product_price:body.productPrice,
             product_description:body.productDesc
         }
+
+        const data = await productModel.create(proObj)
+        res.json({
+            message:"successfully created",
+            status:true,
+            data
+        })
 
     } catch (error) {
         res.json({
