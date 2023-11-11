@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Login from './components/Login'
 import SignUp from'./components/SignUp'
-import {Dashboard} from './components'
+import {Home} from './components/pages'
 
 
 const App = () => {
@@ -10,7 +10,7 @@ const App = () => {
     <Routes>
       <Route path='/' element={<Login />}/>
       <Route path='/signup' element={<SignUp />}/>
-      <Route path='/dashboard' element={<Dashboard />}/>
+      <Route path='/home' element={<Home />}/>
 
     </Routes>
   )

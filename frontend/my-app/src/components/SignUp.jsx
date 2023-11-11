@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const SignUp = () => {
 
-    const [name,setName] = useState('')
+    const [Name,setName] = useState('')
     const [phoneNo,setPhoneNo] = useState('')
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
@@ -13,7 +13,7 @@ const SignUp = () => {
 
   const handleSignUp = async (e) =>{
       e.preventDefault(e)
-      const response = await axios.post("http://localhost:3001/api/createuser",{name,phoneNo,email,password})
+      const response = await axios.post("http://localhost:3001/api/createuser",{Name,phoneNo,email,password})
       console.log(response)
       navigate('/')
 

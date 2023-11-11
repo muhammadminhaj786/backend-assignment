@@ -86,7 +86,7 @@ app.post('/api/login', async (req,res)=>{
     const emailExist = await userModel.findOne({email})
     if(!emailExist){
         res.json({
-            message: "Invalid Cridentials",
+            message: "email exists",
             status: false,
             data: null
         })

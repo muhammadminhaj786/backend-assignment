@@ -11,9 +11,19 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault(e)
-        const response = await axios.post('http://localhost:3001/api/login', { email, password })
-        console.log(response)
-        navigate("/dashboard")
+        try {
+            const response = await axios.post('http://localhost:3001/api/login', { email, password })
+            console.log(response)
+            if(response.status==true){
+                console.log('successfuly login')
+                navigate('/home')
+            }else{
+                alert(response.message)
+            }
+        
+        } catch (error) {
+            console.log(error.message)
+        }
 
 
     }
