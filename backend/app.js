@@ -117,6 +117,7 @@ app.post('/api/login', async (req,res)=>{
 
 
 // <----------------Prducts api------->
+// post api
 app.post('/api/createproduct', async(req,res)=>{
     try {
         
@@ -140,6 +141,19 @@ app.post('/api/createproduct', async(req,res)=>{
             message:"product is not created",
             status:false,
             data:null
+        })
+    }
+
+})
+
+//delete api
+app.delete('/api/deleteproduct', async (req,res)=>{
+    try {
+        
+    } catch (error) {
+        res.json({
+            message:'products not delete',
+            status:false
         })
     }
 
