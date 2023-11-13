@@ -86,11 +86,11 @@ app.post('/api/login', async (req,res)=>{
     const emailExist = await userModel.findOne({email})
     if(!emailExist){
         res.json({
-            message: "email exists",
+            message: "invalid credentials",
             status: false,
             data: null
         })
-        return
+        
     }
     const comparePass = await bcrypt.compare(password,emailExist.password)
     if(comparePass){

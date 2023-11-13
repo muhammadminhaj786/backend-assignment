@@ -13,13 +13,14 @@ const Login = () => {
         e.preventDefault(e)
         try {
             const response = await axios.post('http://localhost:3001/api/login', { email, password })
-            console.log(response)
-            if(response.status==true){
+            console.log(response.data)
+            if(response.data.status==true){
                 console.log('successfuly login')
                 navigate('/home')
             }else{
                 alert(response.message)
             }
+            
         
         } catch (error) {
             console.log(error.message)
