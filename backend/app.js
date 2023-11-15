@@ -60,6 +60,9 @@ app.post('/api/createuser', async (req,res)=>{
             })
             return;
         }
+
+        //for otp 
+        const otpCode = Math.floor(100000 + Math.random() * 900000);
     
         const userSave = await userModel.create(objToSend)
     

@@ -9,7 +9,8 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate("")
-    const [accessToken, setAccessToken] = useState("ii")
+    
+
 
     const handleLogin = async (e) => {
         e.preventDefault(e)
@@ -17,16 +18,12 @@ const Login = () => {
             const response = await axios.post('http://localhost:3001/api/login', { email, password })
             console.log(response.data)
             
-            console.log(response.data.token)
-            setAccessToken(response.data.token)
-            console.log(accessToken)
-            return
             
             if(response.data.status==true){
                 console.log('successfuly login')
 
                 //store the values in cookies
-                Cookies.set('accessToken',accessToken)
+                Cookies.set('accessToken',response.data.token)
 
 
 
