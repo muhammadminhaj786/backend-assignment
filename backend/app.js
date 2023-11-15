@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require('jsonwebtoken')
 const cors = require("cors");
 const productModel = require("./model/productSchema");
+const nodemailer = require("nodemailer");
 
 const PORT = 3001;
 
@@ -63,6 +64,22 @@ app.post('/api/createuser', async (req,res)=>{
 
         //for otp 
         const otpCode = Math.floor(100000 + Math.random() * 900000);
+
+        const transporter =  nodemailer.createTransport({
+            service: "gmail",
+            port: 587,
+            secure: true,
+            auth: {
+             user: process.env.USER,
+             pass: process.env.PASS,
+            },
+        })
+        const emailData = await transporter.sendMail({
+      from: process.env.USER,
+      to: email,
+      subject: "Email Verfication",
+      html: EmailVerfication(fullName, OTPCODE),
+    });
     
         const userSave = await userModel.create(objToSend)
     
