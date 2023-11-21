@@ -4,7 +4,8 @@ import Cookies from 'js-cookie'
 
 
 const Home = () => {
-  const token = Cookies.get("accessToken")
+  // const token = Cookies.get("accessToken")
+  const token = localStorage.getItem("accessToken")
   console.log(token)
   
   return (

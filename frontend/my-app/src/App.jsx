@@ -10,13 +10,8 @@ import SignUp from './components/SignUp'
 const App = () => {
   return (
     <>
-    {/* // <AppRoutes /> */}
-    
-      <Routes>
-        <Route path='/' element={<Login />}/>
-        <Route path='/home' element={<Home />} />
-        <Route path='/signup' element={<SignUp />} />
-      </Routes>
+     <AppRoutes />
+      
     </>
   )
 }

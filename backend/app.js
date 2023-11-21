@@ -1,4 +1,5 @@
-//Login
+require('dotenv').config();
+
 
 const express = require("express")
 const mongoose = require('mongoose')
@@ -9,6 +10,8 @@ const jwt = require('jsonwebtoken')
 const cors = require("cors");
 const productModel = require("./model/productSchema");
 const nodemailer = require("nodemailer");
+const EmailVerfication = require("./emailVerification")
+const OTPModel = require('./model/otpSchema');
 
 const PORT = 3001;
 
@@ -31,8 +34,8 @@ app.post('/api/createuser', async (req,res)=>{
     try {
         const body = req.body
         console.log(body)
-        const {Name,phoneNo,email,password} = body
-        if(!Name || !phoneNo || !email || !password){
+        const {fullName,phoneNo,email,password,userType} = body
+        if(!fullName || !phoneNo || !email || !password || !userType){
             res.json({
                 message:"credential missing",
                 status: false,
@@ -42,13 +45,14 @@ app.post('/api/createuser', async (req,res)=>{
         }
     
         //covert password into hash
-        const hashPass = await bcrypt.hash(password,10) 
+        const hashPass = await bcrypt.hash(password,5) 
         console.log(hashPass)
         const objToSend = {
-            name: Name,
+            full_Name: fullName,
             phone_No:phoneNo,
             email,
-            password: hashPass
+            password: hashPass,
+            user_type: userType
         }
     
         //for unique email
@@ -63,23 +67,28 @@ app.post('/api/createuser', async (req,res)=>{
         }
 
         //for otp 
-        const otpCode = Math.floor(100000 + Math.random() * 900000);
+    //     const otpCode = Math.floor(100000 + Math.random() * 900000);
 
-        const transporter =  nodemailer.createTransport({
-            service: "gmail",
-            port: 587,
-            secure: true,
-            auth: {
-             user: process.env.USER,
-             pass: process.env.PASS,
-            },
-        })
-        const emailData = await transporter.sendMail({
-      from: process.env.USER,
-      to: email,
-      subject: "Email Verfication",
-      html: EmailVerfication(fullName, OTPCODE),
-    });
+    //     const transporter =  nodemailer.createTransport({
+    //         service: "gmail",
+    //         port: 587,
+    //         secure: true,
+    //         auth: {
+    //          user: process.env.USER,
+    //          pass: process.env.PASS,
+    //         },
+    //     })
+    //     const emailData = await transporter.sendMail({
+    //   from: process.env.USER,
+    //   to: email,
+    //   subject: "Email Verfication",
+    //   html: EmailVerfication(fullName, otpCode),
+    // });
+
+    //     await OTPModel.create({
+    //         otp_code: otpCode,
+    //         email
+    //     })
     
         const userSave = await userModel.create(objToSend)
     
@@ -102,6 +111,15 @@ app.post('/api/createuser', async (req,res)=>{
 app.post('/api/login', async (req,res)=>{
     const {email,password} = req.body
     console.log(email,password)
+
+    if(!email || !password) {
+        res.status(400).json({
+            status: false,
+            message: "required fields are missing",
+            data: null
+        });
+        return
+    }
 
     const emailExist = await userModel.findOne({email})
     if(!emailExist){
