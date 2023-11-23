@@ -12,13 +12,26 @@ const productModel = require("./model/productSchema");
 const nodemailer = require("nodemailer");
 const EmailVerfication = require("./emailVerification")
 const OTPModel = require('./model/otpSchema');
+const fileupload = require("express-fileupload")
+const cloudinary = require("cloudinary").v2
 
 const PORT = 3001;
+
+//cloudinary configration
+cloudinary.config({ 
+    cloud_name: 'dmuf5myro', 
+    api_key: '829968978782487', 
+    api_secret: 'AGrf9fDp8Nq74q-tp_3asDfReNA' 
+  });
 
 //body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
+
+app.use(fileupload({
+    useTempFiles:true
+}))
 app.get('/',()=>{
     console.log('server up')
 })
